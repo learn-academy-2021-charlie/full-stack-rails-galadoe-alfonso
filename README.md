@@ -251,8 +251,20 @@ post '/blog_posts' => "blog_post#create", as: 'blog_create'
     we copied the form from the new view. we added `method: :patch`
 
 - As a developer, I can ensure that all blog posts have titles and content for each post.
+in the model
+```ruby
+validates :title, :content, presence:true
+```
 - As a developer, I can ensure that all blog post titles are unique.
+in the model
+```ruby
+validates :title, uniqueness:true
+```
 - As a developer, I can ensure that blog post titles are at least 10 characters.
+in the model
+```ruby
+validates :title, length: {minimum: 10}
+```
 
 ### The link_to Method
 
