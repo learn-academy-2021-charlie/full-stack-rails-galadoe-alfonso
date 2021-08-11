@@ -139,8 +139,48 @@ in the new view:
 ```
 
 - As a user, I can click a button that will take me from the home page to a page where I can create a blog post.
+in the route
+```ruby
+get '/blog_post' => "blog_post#new", as: 'blog_new'
+```
+in the new view
+```ruby
+<p><%=link_to "Main Post", root_path%></p>
+```
+in the controller create an new method
+```ruby
+def new
+  @blog_post = BlogPost.new
+end
+```
 - As a user, I can navigate from the form back to the home page.
+in the new view
+```ruby
+<p><%=link_to "Main Post", root_path%></p>
+```
 - As a user, I can click a button that will submit my blog post to the database.
+in the controller
+```ruby
+def create
+  @blog_post = BlogPost.create(blog_post_params)
+  #checking to see if the post is valid
+  if @blog_post.valid?
+    redirect_to root_path
+  else
+    redirect_to blog_new_path
+  end
+end
+```
+##it allows on title and content as parameter##
+```ruby
+def blog_post_params
+  params.require(:blog_post).permit(:title, :content)
+end
+```
+in the route
+```ruby
+post '/blog_posts' => "blog_post#create", as: 'blog_create'
+```
 - As a user, I when I submit my post, I am redirected to the home page.
 
 ### Stretch Challenges
