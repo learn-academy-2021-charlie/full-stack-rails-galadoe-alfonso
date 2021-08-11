@@ -27,9 +27,9 @@ rails db:create
 ```
 
 - As a user, I can see all the blog titles listed on the home page of the application.
-  
+
   **FIRST CREATE CONTROLLER FOR MODEL**
-  
+
   in controller:
 
 ```ruby
@@ -42,6 +42,7 @@ in routes.rb:
 
 ```ruby
 get '/blog_posts' => "blog_post#index"
+root 'blog_post#index' (links to the index page)
 ```
 
 in view:
@@ -51,6 +52,25 @@ in view:
 ```
 
 - As a user, I can click on the title of a blog and be routed to a page where I see the title and content of the blog post I selected.
+**First we create a show view**
+
+in the blog_post controller, create a show method
+```ruby
+def show
+  @blog1 = BlogPost.find(params[:id])
+end
+
+```
+
+in the index view, we link it to the pages
+```ruby
+<li><%=link_to blog_post.title, blog_post_path(blog_post)%></li>
+```
+in the show view, we displayed the title and the content
+```ruby
+<h1><%=@blog_post.title%></h1>
+<p><%=@blog_post.content%></p>
+```
 - As a user, I can navigate from the show page back to the home page.
 - As a user, I see a form where I can create a new blog post.
 - As a user, I can click a button that will take me from the home page to a page where I can create a blog post.
