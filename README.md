@@ -139,27 +139,36 @@ in the new view:
 ```
 
 - As a user, I can click a button that will take me from the home page to a page where I can create a blog post.
-in the route
+  in the route
+
 ```ruby
 get '/blog_post' => "blog_post#new", as: 'blog_new'
 ```
+
 in the new view
+
 ```ruby
 <p><%=link_to "Main Post", root_path%></p>
 ```
+
 in the controller create an new method
+
 ```ruby
 def new
   @blog_post = BlogPost.new
 end
 ```
+
 - As a user, I can navigate from the form back to the home page.
-in the new view
+  in the new view
+
 ```ruby
 <p><%=link_to "Main Post", root_path%></p>
 ```
+
 - As a user, I can click a button that will submit my blog post to the database.
-in the controller
+  in the controller
+
 ```ruby
 def create
   @blog_post = BlogPost.create(blog_post_params)
@@ -171,21 +180,45 @@ def create
   end
 end
 ```
+
 ##it allows on title and content as parameter##
+
 ```ruby
 def blog_post_params
   params.require(:blog_post).permit(:title, :content)
 end
 ```
+
 in the route
+
 ```ruby
 post '/blog_posts' => "blog_post#create", as: 'blog_create'
 ```
+
 - As a user, I when I submit my post, I am redirected to the home page.
+  in our create method, we check to see if the object is valid. If it is, we use `redirect_to` to go to the main page.
 
 ### Stretch Challenges
 
 - As a user, I can delete my blog post.
+  - in the show view, we want a link to delete
+  ```ruby
+  <p>
+    <%= link_to "Delete Post", delete_blog_post_path(@blog1), method: :delete %>
+  </p>
+  ```
+  - in controller, create #destroy method.
+  ```ruby
+    def destroy
+    @blog_post = BlogPost.find(params[:id])
+    if @blog_post.destroy
+      redirect_to root_path
+    else
+      redirect_to blog_post_path(@blog_post)
+    end
+  end
+  ```
+  - link will go to destroy path THEN redirect to main page
 - As a user, I can update my blog post.
 - As a developer, I can ensure that all blog posts have titles and content for each post.
 - As a developer, I can ensure that all blog post titles are unique.
