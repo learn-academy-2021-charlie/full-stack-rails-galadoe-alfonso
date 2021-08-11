@@ -27,9 +27,24 @@ class BlogPostController < ApplicationController
 
 
   #edit -- the page with a form
+  def edit 
+    @blog_post = BlogPost.find(params[:id])
+  end
+
 
   #update
-
+  def update 
+    #find the blog we want to update
+    @blog_post = BlogPost.find(params[:id])
+    #update blog
+    
+    #redirect to main page
+    if @blog_post.update(blog_post_params)
+      redirect_to root_path
+    else
+      redirect_to blog_posts
+    end
+  end
 
   #destroy
   def destroy
