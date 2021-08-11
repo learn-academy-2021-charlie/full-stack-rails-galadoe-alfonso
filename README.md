@@ -103,6 +103,41 @@ in show.html.erb view
 ```
 
 - As a user, I see a form where I can create a new blog post.
+  in routes.rb
+
+```ruby
+  #this is the new route
+  get 'blog_posts/new' => 'blog_post#new'
+```
+
+in our controler:
+
+```ruby
+ def new
+  @blog_post = BlogPost.new
+ end
+```
+
+in the new view:
+
+```ruby
+<h1>Create a New Blog Post </h1>
+
+<%= form_with model: @blog_post, local: true do |form|  %>
+<%= form.label :title %>
+<%= form.text_field :title %>
+<br>
+<br>
+<%= form.label :content %>
+<%= form.text_area :content %>
+<br>
+<br>
+<%= form.submit 'Add Post' %>
+
+<% end %>
+
+```
+
 - As a user, I can click a button that will take me from the home page to a page where I can create a blog post.
 - As a user, I can navigate from the form back to the home page.
 - As a user, I can click a button that will submit my blog post to the database.
