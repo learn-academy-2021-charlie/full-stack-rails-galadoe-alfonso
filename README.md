@@ -27,7 +27,9 @@ rails db:create
 ```
 
 - As a user, I can see all the blog titles listed on the home page of the application.
+  
   **FIRST CREATE CONTROLLER FOR MODEL**
+  
   in controller:
 
 ```ruby
