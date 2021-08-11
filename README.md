@@ -27,9 +27,9 @@ rails db:create
 ```
 
 - As a user, I can see all the blog titles listed on the home page of the application.
-  
+
   **FIRST CREATE CONTROLLER FOR MODEL**
-  
+
   in controller:
 
 ```ruby
@@ -42,6 +42,7 @@ in routes.rb:
 
 ```ruby
 get '/blog_posts' => "blog_post#index"
+root 'blog_post#index' (links to the index page)
 ```
 
 in view:
@@ -51,8 +52,92 @@ in view:
 ```
 
 - As a user, I can click on the title of a blog and be routed to a page where I see the title and content of the blog post I selected.
+  **First we create a show view**
+
+in the blog_post controller, create a show method
+
+```ruby
+def show
+  @blog1 = BlogPost.find(params[:id])
+end
+
+```
+
+in the index view, we link it to the pages
+
+```ruby
+<li><%=link_to blog_post.title, blog_post_path(blog_post)%></li>
+```
+
+in the show view, we displayed the title and the content
+
+```ruby
+<h1><%=@blog_post.title%></h1>
+<p><%=@blog_post.content%></p>
+```
+
 - As a user, I can navigate from the show page back to the home page.
+  we found two ways to do it.
+
+**Method one:**
+
+in show.html.erb view
+
+```ruby
+ <%= link_to "text for link", root_path %>
+```
+
+**Method two:**
+
+in routes.rb
+
+```ruby
+get '/blog_posts' => "blog_post#index", as: 'blog_posts'
+#add an alias called blog_posts
+```
+
+in show.html.erb view
+
+```ruby
+ <%= link_to "text for link", blog_posts_path %>
+```
+
 - As a user, I see a form where I can create a new blog post.
+  in routes.rb
+
+```ruby
+  #this is the new route
+  get 'blog_posts/new' => 'blog_post#new'
+```
+
+in our controler:
+
+```ruby
+ def new
+  @blog_post = BlogPost.new
+ end
+```
+
+in the new view:
+
+```ruby
+<h1>Create a New Blog Post </h1>
+
+<%= form_with model: @blog_post, local: true do |form|  %>
+<%= form.label :title %>
+<%= form.text_field :title %>
+<br>
+<br>
+<%= form.label :content %>
+<%= form.text_area :content %>
+<br>
+<br>
+<%= form.submit 'Add Post' %>
+
+<% end %>
+
+```
+
 - As a user, I can click a button that will take me from the home page to a page where I can create a blog post.
 - As a user, I can navigate from the form back to the home page.
 - As a user, I can click a button that will submit my blog post to the database.
@@ -65,3 +150,14 @@ in view:
 - As a developer, I can ensure that all blog posts have titles and content for each post.
 - As a developer, I can ensure that all blog post titles are unique.
 - As a developer, I can ensure that blog post titles are at least 10 characters.
+
+### The link_to Method
+
+link_to needs at least 2 things:
+
+- the text that will show on the link
+- the path that the link will take the user to
+
+```ruby
+  link_to "text the link will have", the_path
+```
