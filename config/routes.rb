@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :fruits
   #homepage
   root 'blog_post#index'
   #This is the index route

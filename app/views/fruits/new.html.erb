@@ -1,0 +1,17 @@
+<h1>Create a new Fruit</h1>
+
+<%=form_with model: @fruit, local:true do |form| %>
+<%=form.label :name %>
+<%=form.text_field :name %>
+<br>
+<br>
+<%=form.label :is_sweet, 'Is it sweet?' %>
+<%=form.text_field :is_sweet%>
+<br>
+<br>
+<%=form.label :color%>
+<%=form.text_field :color%>
+<br>
+<br>
+<%=form.submit "Add Fruit" %>
+<%end%>
