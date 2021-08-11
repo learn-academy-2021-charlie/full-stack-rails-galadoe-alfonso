@@ -16,5 +16,7 @@ Rails.application.routes.draw do
 
   delete '/blog_posts/:id' => 'blog_post#destroy', as: 'delete_blog_post'
 
+  get '/blog_posts/:id/edit' => 'blog_post#edit', as: 'edit_blog_post'
 
+  patch 'blog_posts/:id' => 'blog_post#update'
 end

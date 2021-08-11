@@ -220,6 +220,36 @@ post '/blog_posts' => "blog_post#create", as: 'blog_create'
   ```
   - link will go to destroy path THEN redirect to main page
 - As a user, I can update my blog post.
+
+  - controller -> create a method #edit
+
+    ```ruby
+    def edit
+      @blog_post = BlogPost.find(params[:id])
+    end
+    ```
+
+    ```ruby
+    def update
+    #find the blog we want to update
+    @blog_post = BlogPost.find(params[:id])
+    #update blog
+
+    #redirect to main page
+    if @blog_post.update(blog_post_params)
+      redirect_to root_path
+    else
+      redirect_to blog_posts
+    end
+    end
+
+    ```
+
+  - in router -> create a path to edit (which will show the user a form)
+    `get '/blog_posts/:id/edit' => 'blog_post#edit', as: 'edit_blog_post'`
+  - create a view with that form
+    we copied the form from the new view. we added `method: :patch`
+
 - As a developer, I can ensure that all blog posts have titles and content for each post.
 - As a developer, I can ensure that all blog post titles are unique.
 - As a developer, I can ensure that blog post titles are at least 10 characters.
